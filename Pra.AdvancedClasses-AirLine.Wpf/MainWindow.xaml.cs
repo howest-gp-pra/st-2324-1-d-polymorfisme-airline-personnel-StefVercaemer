@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Pra.Airlines.Core.Services;
 using Pra.Airlines.Core.Entities;
+using System.Diagnostics;
 
 namespace Pra.AdvancedClasses_AirLine.Wpf
 {
@@ -27,12 +28,16 @@ namespace Pra.AdvancedClasses_AirLine.Wpf
         public MainWindow()
         {
             InitializeComponent();
+            CabinCrew cabinCrew = new CabinCrew("Nathalie", null, 120);
+            Debug.WriteLine(cabinCrew.Experience);
+            Personnel personnel = (Personnel)cabinCrew;
+            
             airLine = new AirLine();
         }
 
         void ShowPersonnel()
         {
-            lstAvailableCrew.ItemsSource = airLine.Pilots;
+            lstAvailableCrew.ItemsSource = airLine.PersonnelMembers;
             lstAvailableCrew.Items.Refresh();
         }
 

@@ -3,34 +3,11 @@ using System;
 
 namespace Pra.Airlines.Core.Entities
 {
-    public class CabinCrew
+    public class CabinCrew : Personnel
     {
-        const int LengthOfNameLow = 4;
-        const int LengthOfNameHigh = 30;
-        const string NameLengthLowException = "Minimumlengte van de naam: ";
-        const string NameLengthHighException = "Maximumlengte van de naam: ";
-
-        private string name;
-
-        public string Name
-        {
-            get { return name; }
-            set
-            {
-                value = value.Trim();
-                if (value.Length < LengthOfNameLow)
-                    throw new ArgumentException(NameLengthLowException);
-                if (value.Length > LengthOfNameHigh)
-                    throw new ArgumentException(NameLengthHighException);
-                name = value;
-            }
-        }
-
-        public Guid Id { get; }
-
         public int Flights { get; set; }
 
-        public Experience Experience
+        public override Experience Experience
         {
             get
             {
@@ -41,10 +18,8 @@ namespace Pra.Airlines.Core.Entities
             }
         }
 
-        public CabinCrew(string name, int flights = 0, Guid? id = null)
+        public CabinCrew(string name, Guid? id, int flights = 0) : base(name, id)
         {
-            Id = id == null ? Guid.NewGuid() : (Guid)id;
-            Name = name;
             Flights = flights;
         }
 
@@ -55,7 +30,7 @@ namespace Pra.Airlines.Core.Entities
 
         public override string ToString()
         {
-            return $"{Name} ({Experience})\n\tVluchten: {Flights}" ;
+            return $"{base.ToString()} ({Experience})\n\tVluchten: {Flights}" ;
         }
     }
 }

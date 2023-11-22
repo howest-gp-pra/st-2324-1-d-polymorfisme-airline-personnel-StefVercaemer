@@ -9,6 +9,8 @@ namespace Pra.Airlines.Core.Services
 {
     public class AirLine
     {
+        public List<Personnel> PersonnelMembers { get; set; } = new List<Personnel>();
+
         public List<Pilot> Pilots { get; set; }
 
         public List<CabinCrew> CabinCrewMembers { get; set; }
@@ -20,24 +22,30 @@ namespace Pra.Airlines.Core.Services
 
         private void CreatePersonnel()
         {
-            Pilots = new List<Pilot>
+            List<Pilot>  pilots = new List<Pilot>
             {
-                new Pilot("Chantal", 6000),
-                new Pilot("George", 7300),
-                new Pilot("Barbara", 500),
+                new Pilot("Chantal", flyingHours: 6000),
+                new Pilot("George", flyingHours: 7300),
+                new Pilot("Barbara", flyingHours: 500),
                 new Pilot("Theodore"),
-                new Pilot("Eleonore", 2999),
-                new Pilot("François", 100),
+                new Pilot("Eleonore", flyingHours: 2999),
+                new Pilot("François", flyingHours: 100),
             };
 
-            CabinCrewMembers  = new List<CabinCrew>
+            PersonnelMembers.AddRange(pilots);
+
+            Guid existingId = Guid.Parse("b8f64f9e-6980-4864-af57-9a3066907984");
+
+            List<CabinCrew> cabinCrewMembers  = new List<CabinCrew>
             {
-                new CabinCrew("Enrico"),
-                new CabinCrew("Kees", 15),
-                new CabinCrew("Fritz", 25),
-                new CabinCrew("Georges", 18),
-                new CabinCrew("Juan")
+                new CabinCrew("Enrico", null),
+                new CabinCrew("Kees", existingId, 15),
+                new CabinCrew("Fritz", null, 25),
+                new CabinCrew("Georges", null, 18),
+                new CabinCrew("Juan", null)
             };
+            
+            PersonnelMembers.AddRange(cabinCrewMembers);
         }
     }
 }
