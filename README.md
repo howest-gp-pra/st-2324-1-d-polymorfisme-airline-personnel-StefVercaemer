@@ -58,3 +58,21 @@ Vul lstAvailableCrew met alle personeelsleden of een selectie ervan op basis van
 De (wat onorthodoxe) GUI ziet eruit zoals hieronder getoond.
 
 ![Screenshot](Data/ScreenShot.png)
+
+
+## Uitbreiding
+
+- Voor het personeel wordt nu ook het loon bijgehouden (salary). Dit wordt ingesteld bij de instantiëring (willekeurig tussen 2500 en 3500). Daarna wordt het enkel gebruikt in de property **<span style="color: blue">Career</span>**.
+- Via de property **<span style="color: blue">Career</span>** kan een overzicht opgevraagd worden van de carrière. Standaard is dit de naam en een indicatie van de hoogte van het loon.
+  - Standaard: Piet (Regular)
+  - Loon vanaf 3000: Jérôme (Big Shot)
+
+- Bij piloten wordt het loon met 10 % verhoogd op het moment dat ze overgaan van junior naar skilled
+  - Voeg een methode Fly toe. Die verhoogt het aantal vlieguren met de opgegeven hoeveelheid in de parameter.
+  - Zorg dat skilled piloten meteen hun opslag krijgen bij aanwerving
+
+- Bij piloten geeft de property **<span style="color: blue">Career</span>** geeft naast de naam en de hoogte van het loon ook het aantal vluchturen weer
+> vb.
+>
+> Piet (Regular)<br>
+> Vluchturen: 1500
