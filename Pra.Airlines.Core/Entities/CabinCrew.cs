@@ -5,7 +5,17 @@ namespace Pra.Airlines.Core.Entities
 {
     public class CabinCrew : Personnel
     {
-        public int Flights { get; set; }
+        //public int Flights {  get; private set; }
+
+        private int flights;
+
+        public int Flights
+        {
+            get { return flights; }
+            private set { flights = value; }
+        }
+
+
 
         public override Experience Experience
         {
@@ -23,7 +33,7 @@ namespace Pra.Airlines.Core.Entities
             Flights = flights;
         }
 
-        public void AddFlight()
+        internal void AddFlight()
         {
             Flights++;
         }

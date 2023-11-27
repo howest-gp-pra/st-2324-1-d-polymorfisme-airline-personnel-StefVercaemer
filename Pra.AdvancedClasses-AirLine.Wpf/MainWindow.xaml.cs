@@ -23,16 +23,25 @@ namespace Pra.AdvancedClasses_AirLine.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        AirLine airLine;
+        AirLineService airLine;
 
         public MainWindow()
         {
             InitializeComponent();
-            CabinCrew cabinCrew = new CabinCrew("Nathalie", null, 120);
-            Debug.WriteLine(cabinCrew.Experience);
-            Personnel personnel = (Personnel)cabinCrew;
-            
-            airLine = new AirLine();
+            CabinCrew nathalie = new CabinCrew("Nathalie", null, 120);
+            Debug.WriteLine(nathalie.Experience);
+
+
+            Pilot youri = new Pilot("Youri", null);
+
+            Personnel boxedYouri = youri;
+            Personnel boxedNathalie = nathalie;
+
+            Debug.WriteLine(boxedNathalie.Experience);
+            Debug.WriteLine(boxedYouri.Experience);
+
+
+            airLine = new AirLineService();
         }
 
         void ShowPersonnel()

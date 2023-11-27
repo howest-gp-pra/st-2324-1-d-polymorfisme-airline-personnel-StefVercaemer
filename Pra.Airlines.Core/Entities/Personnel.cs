@@ -15,9 +15,9 @@ namespace Pra.Airlines.Core.Entities
         public const string NameLengthLowException = "Minimumlengte van de naam: ";
         public const string NameLengthHighException = "Maximumlengte van de naam: ";
 
-        private string name;
+        protected string name;
 
-        public string Name
+        public virtual string Name
         {
             get { return name; }
             set

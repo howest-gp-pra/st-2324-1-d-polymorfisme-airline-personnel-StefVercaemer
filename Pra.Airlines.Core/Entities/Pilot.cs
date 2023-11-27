@@ -9,6 +9,7 @@ namespace Pra.Airlines.Core.Entities
 {
     public class Pilot : Personnel
     {
+
         const string FlyingHoursZeroOrLessException = "Geef een getal van meer dan nul voor de vlieguren";
 
         private int flyingHours;
@@ -16,7 +17,7 @@ namespace Pra.Airlines.Core.Entities
         public int FlyingHours
         {
             get { return flyingHours; }
-            set 
+            private set 
             {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(FlyingHoursZeroOrLessException);
@@ -38,6 +39,11 @@ namespace Pra.Airlines.Core.Entities
         public Pilot(string name, Guid? id = null, int flyingHours = 0) : base(name, id) 
         {
             FlyingHours = flyingHours;
+        }
+
+        internal void AddFlyingHours(uint hours)
+        {
+            FlyingHours += (int)hours; 
         }
 
         public override string ToString()

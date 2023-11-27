@@ -7,16 +7,22 @@ using Pra.Airlines.Core.Entities;
 
 namespace Pra.Airlines.Core.Services
 {
-    public class AirLine
+    public class AirLineService
     {
-        public List<Personnel> PersonnelMembers { get; set; } = new List<Personnel>();
+        private List<Personnel> personnelMembers;
+
+        public IEnumerable<Personnel> PersonnelMembers
+        {
+            get { return personnelMembers.AsReadOnly(); }
+        }
 
         public List<Pilot> Pilots { get; set; }
 
         public List<CabinCrew> CabinCrewMembers { get; set; }
 
-        public AirLine()
+        public AirLineService()
         {
+            personnelMembers = new List<Personnel>();
             CreatePersonnel();
         }
 
@@ -32,10 +38,9 @@ namespace Pra.Airlines.Core.Services
                 new Pilot("François", flyingHours: 100),
             };
 
-            PersonnelMembers.AddRange(pilots);
+            personnelMembers.AddRange(pilots);
 
             Guid existingId = Guid.Parse("b8f64f9e-6980-4864-af57-9a3066907984");
-
             List<CabinCrew> cabinCrewMembers  = new List<CabinCrew>
             {
                 new CabinCrew("Enrico", null),
@@ -44,8 +49,8 @@ namespace Pra.Airlines.Core.Services
                 new CabinCrew("Georges", null, 18),
                 new CabinCrew("Juan", null)
             };
-            
-            PersonnelMembers.AddRange(cabinCrewMembers);
+
+            personnelMembers.AddRange(cabinCrewMembers);
         }
     }
 }
