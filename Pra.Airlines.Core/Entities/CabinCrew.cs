@@ -15,8 +15,6 @@ namespace Pra.Airlines.Core.Entities
             private set { flights = value; }
         }
 
-
-
         public override Experience Experience
         {
             get

@@ -9,6 +9,11 @@ namespace Pra.Airlines.Core.Services
 {
     public class AirLineService
     {
+        public const string ObjectNullException = "Geef geen leeg object door";
+        public const string DoubleNameException = ": deze naam komt reeds voor in de lijst";
+        public const string UnknownObjectException = ": deze naam komt niet voor in de lijst";
+
+        #region Listing area
         private List<Personnel> personnelMembers;
 
         public IEnumerable<Personnel> PersonnelMembers
@@ -16,15 +21,89 @@ namespace Pra.Airlines.Core.Services
             get { return personnelMembers.AsReadOnly(); }
         }
 
-        public List<Pilot> Pilots { get; set; }
+        public IEnumerable<Pilot> Pilots
+        {
+            get
+            {
+                List<Pilot> pilots = new List<Pilot>();
+                foreach (Personnel personnel in PersonnelMembers)
+                {
+                    if (personnel is Pilot)
+                    {
+                        Pilot pilot = (Pilot)personnel;
+                        pilots.Add(pilot);
+                    }
+                }
+                return pilots.AsReadOnly();
+            }
 
-        public List<CabinCrew> CabinCrewMembers { get; set; }
+        }
 
+        public IEnumerable<CabinCrew> CabinCrewMembers
+        {
+            get
+            {
+                List<CabinCrew> cabinCrewMembers = new List<CabinCrew>();
+                foreach (Personnel personnel in PersonnelMembers)
+                {
+                    if (personnel is  CabinCrew)
+                    {
+                        CabinCrew cabinCrew = (CabinCrew)personnel;
+                        cabinCrewMembers.Add(cabinCrew);
+                    }
+                }
+                return cabinCrewMembers.AsReadOnly();
+            }
+        }
+
+        #endregion
         public AirLineService()
         {
             personnelMembers = new List<Personnel>();
             CreatePersonnel();
         }
+
+        #region CRUD-operations
+        public void Add(Personnel toAdd)
+        {
+            if (toAdd == null)
+                throw new Exception(ObjectNullException);
+            else if(toAdd is Pilot &&
+                Personnel.CollectionContainsName(Pilots, toAdd.Name))
+                throw new Exception($"{toAdd.Name}{DoubleNameException} met piloten");
+            else if (toAdd is CabinCrew && 
+                Personnel.CollectionContainsName(CabinCrewMembers, toAdd.Name))
+                throw new Exception($"{toAdd.Name}{DoubleNameException} met cabinepersoneel");
+            else personnelMembers.Add(toAdd);
+        }
+
+        public void Update(Personnel toUpdate, Personnel updated)
+        {
+            if (toUpdate == null || updated == null)
+                throw new Exception(ObjectNullException);
+            else if (updated is Pilot &&
+                Personnel.CollectionContainsName(Pilots, updated.Name))
+                throw new Exception($"{updated.Name}{DoubleNameException} met piloten");
+            else if (updated is CabinCrew &&
+                Personnel.CollectionContainsName(CabinCrewMembers, updated.Name))
+                throw new Exception($"{updated.Name}{DoubleNameException} met cabinepersoneel");
+            else
+            {
+                toUpdate.Name = updated.Name;
+            }
+        }
+
+        public void Delete(Personnel toRemove)
+        {
+            if (toRemove == null)
+                throw new Exception(ObjectNullException);
+            else if (!Personnel.IsExistingObject(PersonnelMembers, toRemove))
+                throw new Exception($"{toRemove.Name}{UnknownObjectException}");
+            else
+                personnelMembers.Remove(toRemove);
+        }
+
+        #endregion
 
         private void CreatePersonnel()
         {

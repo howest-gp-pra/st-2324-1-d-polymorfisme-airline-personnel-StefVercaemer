@@ -15,6 +15,36 @@ namespace Pra.Airlines.Core.Entities
         public const string NameLengthLowException = "Minimumlengte van de naam: ";
         public const string NameLengthHighException = "Maximumlengte van de naam: ";
 
+        static Random random = new Random();
+
+        private decimal salary;
+
+        public string Career 
+        { get
+            {
+                string info = "";
+                info = $"{Name}";
+                if(salary >= 3000)
+                {
+                    info += " (Big Shot)";
+                }
+                else
+                {
+                    info += " (Regular)";
+                }
+                return info;
+            }
+        }
+
+        /*
+
+    - Bij piloten wordt het loon met 10 % verhoogd op het moment 
+        dat ze overgaan van junior naar skilled
+  - Voeg een methode Fly toe. Die verhoogt het aantal vlieguren 
+        met de opgegeven hoeveelheid in de parameter.
+  - Zorg dat skilled piloten meteen hun opslag krijgen bij aanwerving
+         */
+
         protected string name;
 
         public virtual string Name
@@ -43,6 +73,30 @@ namespace Pra.Airlines.Core.Entities
                 Id = (Guid)id;
             else
                 Id = Guid.NewGuid();
+            salary = random.Next(2500, 3501);
+        }
+
+        public static bool CollectionContainsName(IEnumerable<Personnel> workers, string name)
+        {
+            bool nameIsFound = false;
+            foreach (Personnel worker in workers)
+            {
+                if (worker.Name.ToUpper() == name.ToUpper())
+                {
+                    nameIsFound = true;
+                    break;
+                }
+            }
+            return nameIsFound;
+        }
+
+        public static bool IsExistingObject
+            (IEnumerable<Personnel> workers, Personnel toCheck)
+        {
+            bool isExisting = false;
+            if (CollectionContainsName(workers, toCheck.Name))
+                isExisting = true;
+            return isExisting;
         }
 
         public override string ToString()

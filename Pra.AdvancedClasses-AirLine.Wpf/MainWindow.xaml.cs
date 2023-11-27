@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Pra.Airlines.Core.Services;
 using Pra.Airlines.Core.Entities;
 using System.Diagnostics;
+using System.CodeDom;
 
 namespace Pra.AdvancedClasses_AirLine.Wpf
 {
@@ -23,41 +24,44 @@ namespace Pra.AdvancedClasses_AirLine.Wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        AirLineService airLine;
+        AirLineService airLineService;
 
         public MainWindow()
         {
             InitializeComponent();
-            CabinCrew nathalie = new CabinCrew("Nathalie", null, 120);
-            Debug.WriteLine(nathalie.Experience);
+            //CabinCrew nathalie = new CabinCrew("Nathalie", null, 120);
+            //Debug.WriteLine(nathalie.Experience);
 
 
-            Pilot youri = new Pilot("Youri", null);
+            //Pilot youri = new Pilot("Youri", null);
 
-            Personnel boxedYouri = youri;
-            Personnel boxedNathalie = nathalie;
+            //Personnel boxedYouri = youri;
+            //Personnel boxedNathalie = nathalie;
 
-            Debug.WriteLine(boxedNathalie.Experience);
-            Debug.WriteLine(boxedYouri.Experience);
+            //Debug.WriteLine(boxedNathalie.Experience);
+            //Debug.WriteLine(boxedYouri.Experience);
 
 
-            airLine = new AirLineService();
+            airLineService = new AirLineService();
         }
 
         void ShowPersonnel()
         {
-            lstAvailableCrew.ItemsSource = airLine.PersonnelMembers;
+            lstAvailableCrew.ItemsSource = airLineService.PersonnelMembers;
             lstAvailableCrew.Items.Refresh();
         }
 
         void SeedLstFilter()
         {
-
+            lstFilter.Items.Add("Alle personeelsleden");
+            lstFilter.Items.Add(typeof(Pilot));
+            lstFilter.Items.Add(typeof(CabinCrew));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ShowPersonnel();
+            SeedLstFilter();
             tbkFeedback.Visibility = Visibility.Hidden;
         }
 
@@ -73,7 +77,21 @@ namespace Pra.AdvancedClasses_AirLine.Wpf
 
         private void LstFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            object filter = lstFilter.SelectedItem;
+            lstAvailableCrew.ItemsSource = null;
+            if (filter != null)
+            {
+                if (filter is string)
+                    lstAvailableCrew.ItemsSource = airLineService.PersonnelMembers;
+                else
+                {
+                    Type type = filter as Type;
+                    if (type == typeof(Pilot))
+                        lstAvailableCrew.ItemsSource = airLineService.Pilots;
+                    else
+                        lstAvailableCrew.ItemsSource = airLineService.CabinCrewMembers;
+                }
+            }
         }
     }
 }

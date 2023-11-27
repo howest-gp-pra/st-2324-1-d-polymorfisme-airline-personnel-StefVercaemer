@@ -62,8 +62,8 @@ De (wat onorthodoxe) GUI ziet eruit zoals hieronder getoond.
 
 ## Uitbreiding
 
-- Voor het personeel wordt nu ook het loon bijgehouden (salary). Dit wordt ingesteld bij de instantiëring (willekeurig tussen 2500 en 3500). Daarna wordt het enkel gebruikt in de property **<span style="color: blue">Career</span>**.
-- Via de property **<span style="color: blue">Career</span>** kan een overzicht opgevraagd worden van de carrière. Standaard is dit de naam en een indicatie van de hoogte van het loon.
+- Voor het personeel wordt nu ook het loon bijgehouden (salary). Dit wordt ingesteld bij de instantiëring (willekeurig tussen 2500 en 3500). Daarna wordt het enkel gebruikt in de property **Career**.
+- Via de property **Career** kan een overzicht opgevraagd worden van de carrière. Standaard is dit de naam en een indicatie van de hoogte van het loon.
   - Standaard: Piet (Regular)
   - Loon vanaf 3000: Jérôme (Big Shot)
 
