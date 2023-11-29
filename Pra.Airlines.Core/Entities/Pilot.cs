@@ -11,6 +11,7 @@ namespace Pra.Airlines.Core.Entities
     {
 
         const string FlyingHoursZeroOrLessException = "Geef een getal van meer dan nul voor de vlieguren";
+        const int PromotionMileStone = 5000;
 
         private int flyingHours;
 
@@ -29,7 +30,7 @@ namespace Pra.Airlines.Core.Entities
         { 
             get
             {
-                if (FlyingHours < 5000)
+                if (FlyingHours < PromotionMileStone)
                     return Experience.junior;
                 else
                     return Experience.skilled;
@@ -43,7 +44,16 @@ namespace Pra.Airlines.Core.Entities
 
         internal void AddFlyingHours(uint hours)
         {
+            if(Experience == Experience.junior && PromotionMileStone - hours < FlyingHours)
+            {
+                salary *= 1.1M;
+            }
             FlyingHours += (int)hours; 
+        }
+
+        void Fly(uint hours)
+        {
+            FlyingHours += (int)hours;
         }
 
         public override string ToString()

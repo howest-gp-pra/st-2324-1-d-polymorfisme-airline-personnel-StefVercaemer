@@ -17,7 +17,7 @@ namespace Pra.Airlines.Core.Entities
 
         static Random random = new Random();
 
-        private decimal salary;
+        protected decimal salary;
 
         public string Career 
         { get
@@ -36,14 +36,7 @@ namespace Pra.Airlines.Core.Entities
             }
         }
 
-        /*
 
-    - Bij piloten wordt het loon met 10 % verhoogd op het moment 
-        dat ze overgaan van junior naar skilled
-  - Voeg een methode Fly toe. Die verhoogt het aantal vlieguren 
-        met de opgegeven hoeveelheid in de parameter.
-  - Zorg dat skilled piloten meteen hun opslag krijgen bij aanwerving
-         */
 
         protected string name;
 
